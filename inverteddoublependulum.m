@@ -15,7 +15,7 @@ v1 = diff(p1,t) + cross(w1,p1);
 %% Second link
 p2 = [l;0;0];
 w2 = [0;0;diff(th2,t)]
-v2 = cross(w2,p2)
+v2 = diff(p2,t) + cross(w2,p2)
 
 %% Kinetic Energy of the two bodies
 KE1 = 0.5*m*v1.'*v1;
