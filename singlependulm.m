@@ -1,16 +1,16 @@
 syms m t l th(t) g real
 syms d2q q real
-%{
-p = [0.5*l;0;0];
+
+p = [l;0;0];
 w = [0;0;diff(th,t)];
 v = diff(p,t) + cross(w,p);
 KE = 0.5*m*v.'*v;
-PE = -m*g*l*cos(th);
+PE = m*g*l*cos(th);
 L = KE-PE;
 Lag = diff(diffdot(L,diff(th,t)),t) - diffdot(L,th);
 Lg = subs(Lag,[diff(th,t,t) th],[d2q q]);
 d2q = solve(Lg,d2q)
-%}
+%{
 t = linspace(0,200,1000);
 [t,y] = ode45(@integ,t,[pi/2;0]);
 plot(t,y(:,1)*180/pi)
@@ -33,3 +33,4 @@ for i=2:length(t)
         delete(ball);
     end
 end
+%}

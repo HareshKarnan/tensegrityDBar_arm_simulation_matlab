@@ -23,10 +23,10 @@ KE2 = 0.5*m*v2.'*v2;
 KE = KE1 + KE2;
 
 %% Potential Energy of the two bodies
-%PE1 = m*g*l*0.5*sin(th1);
-%PE2 = m*g*(l*sin(th1)+l*0.5*sin(th1+th2));
-%PE = PE1 + PE2;
-PE = 0;
+PE1 = m*g*l*0.5*sin(th1);
+PE2 = m*g*(l*sin(th1)+l*0.5*sin(th1+th2));
+PE = PE1 + PE2;
+
 %% Lagrangian
 L = KE - PE;
 Lag1 = diff(diffdot(L,diff(th1,t))) - diffdot(L,th1);
@@ -36,6 +36,6 @@ LL1 = subs(Lag1,[diff(th1,t,t) diff(th2,t,t) th1 th2],[ddq1 ddq2 q1 q2]);
 LL2 = subs(Lag2,[diff(th1,t,t) diff(th2,t,t) th1 th2],[ddq1 ddq2 q1 q2]);
 
 %% Second order equations
-ddq1 = solve(LL1,ddq1)
-ddq2 = solve(LL2,ddq2)
+ddq1 = solve(LL1-u,ddq1)
+ddq2 = solve(LL2-u,ddq2)
 

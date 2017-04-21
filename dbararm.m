@@ -52,14 +52,22 @@ LL1 = subs(Lag1,[diff(th1,t,t) diff(th2,t,t) diff(th3,t,t) diff(th4,t,t) th1 th2
 LL2 = subs(Lag2,[diff(th1,t,t) diff(th2,t,t) diff(th3,t,t) diff(th4,t,t) th1 th2 th3 th4],[ddq1 ddq2 ddq3 ddq4 q1 q2 q3 q4]);
 LL3 = subs(Lag3,[diff(th1,t,t) diff(th2,t,t) diff(th3,t,t) diff(th4,t,t) th1 th2 th3 th4],[ddq1 ddq2 ddq3 ddq4 q1 q2 q3 q4]);
 LL4 = subs(Lag4,[diff(th1,t,t) diff(th2,t,t) diff(th3,t,t) diff(th4,t,t) th1 th2 th3 th4],[ddq1 ddq2 ddq3 ddq4 q1 q2 q3 q4]);
-s1 = ones(3,1)
-s2=s1;s3=s1;s4=s1;
-Q1 = dot((s1+s2+s4),diffdot(v1,diff(th1,t)));
-Q2 = dot((s1+s2+s4),diffdot(v2,diff(th2,t)));
-Q3 = dot((s1+s2+s3),diffdot(v3,diff(th3,t)));
-Q4 = dot((s1+s2+s3),diffdot(v4,diff(th4,t)));
+s1 = sym('s1(t)');
+s2 = sym('s2(t)');
+s3 = sym('s3(t)');
+s4 = sym('s4(t)');
+Q1 = (s1+s2+s4)*diffdot(v1,diff(th1,t));
+Q2 = (s1+s2+s4)*diffdot(v2,diff(th2,t));
+Q3 = (s1+s2+s3)*diffdot(v3,diff(th3,t));
+Q4 = (s1+s2+s3)*diffdot(v4,diff(th4,t));
+syms t1 t2 t3 t4
+Q1 = subs(Q1(t),[s1 s2 s3 s4],[t1 t2 t3 t4]);
+Q2 = subs(Q2(t),[s1 s2 s3 s4],[t1 t2 t3 t4]);
+Q3 = subs(Q3(t),[s1 s2 s3 s4],[t1 t2 t3 t4]);
+Q4 = subs(Q4(t),[s1 s2 s3 s4],[t1 t2 t3 t4]);
 
 ddq1 = solve(LL1-Q1(2),ddq1)
 ddq2 = solve(LL2-Q2(2),ddq2)
 ddq3 = solve(LL3-Q3(2),ddq3)
 ddq4 = solve(LL4-Q4(2),ddq4)
+
